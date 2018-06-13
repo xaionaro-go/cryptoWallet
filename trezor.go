@@ -106,23 +106,22 @@ func (trezor *trezor) CheckTrezorConnection() {
 }
 
 // See https://github.com/satoshilabs/slips/blob/master/slip-0011.md
-func (trezor *trezor) CipherKeyValue(isToEncrypt bool, keyName string, data, iv []byte, askOnEncode, askOnDecode bool) ([]byte, messages.MessageType) {
-	path := `m/71'/a6'/3'/45'/97'`
+func (trezor *trezor) CipherKeyValue(path string, isToEncrypt bool, keyName string, data, iv []byte, askOnEncode, askOnDecode bool) ([]byte, messages.MessageType) {
 	result, msgType := trezor.call(trezor.Client.CipherKeyValue(isToEncrypt, keyName, data, tesoro.StringToBIP32Path(path), iv, askOnEncode, askOnDecode))
 	return []byte(result), messages.MessageType(msgType)
 }
 
-func (trezor *trezor) EncryptKey(decryptedKey []byte, nonce []byte, trezorKeyname string) []byte {
+func (trezor *trezor) EncryptKey(path string, decryptedKey []byte, nonce []byte, trezorKeyname string) []byte {
 	// note: decryptedKey length should be aligned to 16 bytes
 
 	trezor.CheckTrezorConnection()
 
-	encryptedKey, _ := trezor.CipherKeyValue(true, trezorKeyname, decryptedKey, nonce, false, true)
+	encryptedKey, _ := trezor.CipherKeyValue(path, true, trezorKeyname, decryptedKey, nonce, false, true)
 
 	return encryptedKey
 }
 
-func (trezor *trezor) DecryptKey(encryptedKey []byte, nonce []byte, trezorKeyname string) ([]byte, error) {
+func (trezor *trezor) DecryptKey(path string, encryptedKey []byte, nonce []byte, trezorKeyname string) ([]byte, error) {
 	// note: encryptedKey length should be aligned to 16 bytes
 
 	trezor.CheckTrezorConnection()
@@ -136,7 +135,7 @@ func (trezor *trezor) DecryptKey(encryptedKey []byte, nonce []byte, trezorKeynam
 		encryptedKeyhexValue += "00"
 	}
 
-	decryptedKey, msgType := trezor.CipherKeyValue(false, trezorKeyname, []byte(encryptedKeyhexValue), nonce, false, true)
+	decryptedKey, msgType := trezor.CipherKeyValue(path, false, trezorKeyname, []byte(encryptedKeyhexValue), nonce, false, true)
 
 	if msgType == messages.MessageType_MessageType_Failure {
 		return nil, fmt.Errorf("trezor: %v", string(decryptedKey)) // if an error occurs then the error description is returned into "decryptedKey" as a string
