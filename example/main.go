@@ -49,11 +49,14 @@ func main() {
 
 	masterKey := []byte("some key here")
 
-	encryptedMasterKey, err := wallet.EncryptKey(`m/3'/14'/15'/93'`, masterKey, []byte{}, "someWalletKeyName")
+	encryptedMasterKey, err := wallet.EncryptKey(`m/3'/14'/15'/93'`, masterKey, []byte{}, "aWalletKeyName")
 	checkError(err)
 
-	decryptedMasterKey, err := wallet.DecryptKey(`m/3'/14'/15'/93'`, encryptedMasterKey, []byte{}, "someWalletKeyName")
+	decryptedMasterKey, err := wallet.DecryptKey(`m/3'/14'/15'/93'`, encryptedMasterKey, []byte{}, "aWalletKeyName")
 	checkError(err)
 
-	fmt.Printf("%v (%d)\n%v\n%v (%d)\n%v\n", string(masterKey), len(masterKey), encryptedMasterKey, string(decryptedMasterKey), len(decryptedMasterKey), decryptedMasterKey)
+	fmt.Printf("%v (%d)\n", string(masterKey), len(masterKey))
+	fmt.Println(encryptedMasterKey)
+	fmt.Printf("%v (%d)\n", string(decryptedMasterKey), len(decryptedMasterKey))
+	fmt.Println(decryptedMasterKey)
 }
