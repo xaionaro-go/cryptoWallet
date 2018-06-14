@@ -1,4 +1,9 @@
-see `example/`:
+Supported devices:
+| Vendor | Product | Vendor ID | Product ID | Version | Notes |
+| ------ | ------- | --------- | ---------- | ------- | ----- |
+| SatoshiLabs | Bitcoin Wallet [TREZOR] | 0x534c | 0x0001 | 1.6.0 |Tested on Linux |
+
+See `example/`:
 ```go
 [...]
 
@@ -25,7 +30,7 @@ fmt.Println(decryptedMasterKey)
 
 [...]
 ```
-
+Running the example:
 ```
 $ go run example/main.go 
 some key here (13)
