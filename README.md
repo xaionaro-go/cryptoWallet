@@ -1,17 +1,17 @@
 see `example/`:
 ```
-	...
+...
 
-	masterKey := []byte("some key here")
+masterKey := []byte("some key here")
 
-	encryptedMasterKey, err := wallet.EncryptKey(`m/3'/14'/15'/93'`, masterKey, []byte{}, "someWalletKeyName")
-	checkError(err)
+encryptedMasterKey, err := wallet.EncryptKey(`m/3'/14'/15'/93'`, masterKey, []byte{}, "someWalletKeyName")
+checkError(err)
 
-	decryptedMasterKey, err := wallet.DecryptKey(`m/3'/14'/15'/93'`, encryptedMasterKey, []byte{}, "someWalletKeyName")
-	checkError(err)
+decryptedMasterKey, err := wallet.DecryptKey(`m/3'/14'/15'/93'`, encryptedMasterKey, []byte{}, "someWalletKeyName")
+checkError(err)
 
-	fmt.Printf("%v (%d)\n%v\n%v (%d)\n%v\n", string(masterKey), len(masterKey), encryptedMasterKey, string(decryptedMasterKey), len(decryptedMasterKey), decryptedMasterKey)
-	...
+fmt.Printf("%v (%d)\n%v\n%v (%d)\n%v\n", string(masterKey), len(masterKey), encryptedMasterKey, string(decryptedMasterKey), len(decryptedMasterKey), decryptedMasterKey)
+...
 ```
 
 ```
