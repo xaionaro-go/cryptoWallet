@@ -14,7 +14,7 @@ func (base *WalletBase) SetGetPinFunc(getPinFunc func(title, description, ok, ca
 }
 
 func (base *WalletBase) GetPin(title, description, ok, cancel string) ([]byte, error) {
-	return base.GetPin(title, description, ok, cancel)
+	return base.getPin(title, description, ok, cancel)
 }
 
 func (base *WalletBase) SetGetConfirmFunc(getConfirmFunc func(title, description, ok, cancel string) (bool, error)) {
@@ -22,7 +22,7 @@ func (base *WalletBase) SetGetConfirmFunc(getConfirmFunc func(title, description
 }
 
 func (base *WalletBase) GetConfirm(title, description, ok, cancel string) (bool, error) {
-	return base.GetConfirm(title, description, ok, cancel)
+	return base.getConfirm(title, description, ok, cancel)
 }
 
 type USBHIDWalletBase struct {
