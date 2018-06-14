@@ -39,3 +39,5 @@ some key here (13)
 some key here (16)
 [115 111 109 101 32 107 101 121 32 104 101 114 101 0 0 0]
 ```
+
+A key to be encrypted/decrypted should be a multiple of 16 bytes. If you pass not a multiple of 16 bytes it will pad the value with zeros.
