@@ -7,6 +7,8 @@ Supported devices:
 See `example/`:
 ```go
 [...]
+wallet := cryptoWallet.FindAny()
+[...]
 
 masterKey := []byte("some key here")
 
