@@ -123,7 +123,7 @@ func (trezor *TrezorBase) EncryptKey(path string, decryptedKey []byte, nonce []b
 	switch msgType {
 	case messages.MessageType_MessageType_Success, messages.MessageType_MessageType_CipheredKeyValue:
 	case messages.MessageType_MessageType_Failure:
-		return nil, fmt.Errorf("Got an error from a trezor device: %v", string(encryptedKey))
+		return nil, fmt.Errorf(`Got an error from a trezor device: "%v" (the trezor device is busy?)`, string(encryptedKey))
 	default:
 		return nil, fmt.Errorf("Got an unexpected behaviour from a trezor device: %v: %v", msgType, string(encryptedKey))
 	}
@@ -150,7 +150,7 @@ func (trezor *TrezorBase) DecryptKey(path string, encryptedKey []byte, nonce []b
 	switch msgType {
 	case messages.MessageType_MessageType_Success, messages.MessageType_MessageType_CipheredKeyValue:
 	case messages.MessageType_MessageType_Failure:
-		return nil, fmt.Errorf("Got an error from a trezor device: %v", string(decryptedKey)) // if an error occurs then the error description is returned into "decryptedKey" as a string
+		return nil, fmt.Errorf(`Got an error from a trezor device: %v (the trezor device is busy?)`, string(decryptedKey)) // if an error occurs then the error description is returned into "decryptedKey" as a string
 	default:
 		return nil, fmt.Errorf("Got an unexpected behaviour from a trezor device: %v: %v", msgType, string(encryptedKey))
 	}
