@@ -1,6 +1,4 @@
-// Package trezor implements master key encryption mechanism
-// using open(hardware) device "Trezor One"
-package trezor
+package trezorBase
 
 import (
 	"encoding/hex"
@@ -9,45 +7,40 @@ import (
 
 	"github.com/conejoninja/tesoro"
 	"github.com/conejoninja/tesoro/pb/messages"
-	"github.com/xaionaro-go/pinentry"
+	"github.com/conejoninja/tesoro/transport"
+	I "github.com/xaionaro-go/cryptoWallet/interfaces"
+	routines "github.com/xaionaro-go/cryptoWallet/routines"
+	base "github.com/xaionaro-go/cryptoWallet/wallets/satoshilabs"
 	"github.com/zserge/hid"
 )
 
-const (
-	TrezorPassword = "trezor"
-)
+type TrezorBase struct {
+	base.SatoshilabsWalletBase
+	Client tesoro.Client
 
-type trezor struct {
-	tesoro.Client
-	pinentry pinentry.PinentryClient
-	hid.Device
+	parent I.USBHIDWallet
 }
 
-func New() *trezor {
-	pinentryClient, _ := pinentry.NewPinentryClient()
-	trezorInstance := trezor{
-		pinentry: pinentryClient,
+func (trezor *TrezorBase) SetParent(parent I.USBHIDWallet) {
+	if trezor.parent != nil {
+		panic("trezor.parent is already defined")
 	}
-	trezorInstance.Reconnect()
-	return &trezorInstance
+	trezor.parent = parent
 }
 
-type trezorCipher struct {
-	*trezor
-	keyName string
+func (trezor *TrezorBase) SetHIDDevice(device hid.Device) {
+	var t transport.TransportHID
+	t.SetDevice(device)
+	trezor.Client.SetTransport(&t)
+	trezor.USBHIDWalletBase.SetDevice(device)
 }
 
-func (trezor *trezor) call(msg []byte) (string, uint16) {
+func (trezor *TrezorBase) call(msg []byte) (string, uint16) {
 	result, msgType := trezor.Client.Call(msg)
 
 	switch messages.MessageType(msgType) {
 	case messages.MessageType_MessageType_PinMatrixRequest:
-
-		trezor.pinentry.SetPrompt("PIN")
-		trezor.pinentry.SetDesc("")
-		trezor.pinentry.SetOK("Confirm")
-		trezor.pinentry.SetCancel("Cancel")
-		pin, err := trezor.pinentry.GetPin()
+		pin, err := trezor.GetPin("PIN", "", "Confirm", "Cancel")
 		if err != nil {
 			log.Print("Error", err)
 		}
@@ -59,11 +52,7 @@ func (trezor *trezor) call(msg []byte) (string, uint16) {
 
 	case messages.MessageType_MessageType_PassphraseRequest:
 
-		trezor.pinentry.SetPrompt("Passphrase")
-		trezor.pinentry.SetDesc("")
-		trezor.pinentry.SetOK("Confirm")
-		trezor.pinentry.SetCancel("Cancel")
-		passphrase, err := trezor.pinentry.GetPin()
+		passphrase, err := trezor.GetPin("Passphrase", "", "Confirm", "Cancel")
 		if err != nil {
 			log.Print("Error", err)
 		}
@@ -71,11 +60,7 @@ func (trezor *trezor) call(msg []byte) (string, uint16) {
 
 	case messages.MessageType_MessageType_WordRequest:
 
-		trezor.pinentry.SetPrompt("Word")
-		trezor.pinentry.SetDesc("")
-		trezor.pinentry.SetOK("OK")
-		trezor.pinentry.SetCancel("Cancel")
-		word, err := trezor.pinentry.GetPin()
+		word, err := trezor.GetPin("Word", "", "OK", "Cancel")
 		if err != nil {
 			log.Print("Error", err)
 		}
@@ -86,40 +71,51 @@ func (trezor *trezor) call(msg []byte) (string, uint16) {
 	return result, msgType
 }
 
-func (trezor *trezor) ping(pingMsg string) (string, messages.MessageType) {
+func (trezor *TrezorBase) ping(pingMsg string) (string, messages.MessageType) {
 	pongMsg, msgType := trezor.Client.Call(trezor.Client.Ping(pingMsg, false, false, false))
 	return pongMsg, messages.MessageType(msgType)
 }
 
-func (trezor *trezor) Ping() bool {
-	if trezor.Device == nil {
-		return false
+func (trezor *TrezorBase) Ping() error {
+	if trezor.USBHIDWalletBase.GetDevice() == nil {
+		return fmt.Errorf("trezor.USBHIDWalletBase.GetDevice() == nil")
 	}
-	if _, err := trezor.Device.HIDReport(); err != nil {
-		return false
+	if _, err := trezor.USBHIDWalletBase.GetDevice().HIDReport(); err != nil {
+		return err
 	}
-	pongMsg, _ := trezor.ping("ping")
-	return pongMsg == "ping"
+	pongMsg, msgType := trezor.ping("ping")
+	if pongMsg == "ping" {
+		return nil
+	}
+	switch msgType {
+	case messages.MessageType_MessageType_Success:
+		return fmt.Errorf("The wallet device seems to be not initialized")
+	}
+	return fmt.Errorf("An unexpected behaviour of the wallet device: %v: %v", msgType, pongMsg)
 }
 
-func (trezor *trezor) CheckTrezorConnection() {
-	if trezor.Ping() {
-		return
+func (trezor *TrezorBase) Reconnect() error {
+	return routines.USBHIDReconnect(trezor.parent)
+}
+
+func (trezor *TrezorBase) CheckConnection() error {
+	if trezor.Ping() == nil {
+		return nil
 	}
 
-	trezor.Reconnect()
+	return trezor.Reconnect()
 }
 
 // See https://github.com/satoshilabs/slips/blob/master/slip-0011.md
-func (trezor *trezor) CipherKeyValue(path string, isToEncrypt bool, keyName string, data, iv []byte, askOnEncode, askOnDecode bool) ([]byte, messages.MessageType) {
+func (trezor *TrezorBase) CipherKeyValue(path string, isToEncrypt bool, keyName string, data, iv []byte, askOnEncode, askOnDecode bool) ([]byte, messages.MessageType) {
 	result, msgType := trezor.call(trezor.Client.CipherKeyValue(isToEncrypt, keyName, data, tesoro.StringToBIP32Path(path), iv, askOnEncode, askOnDecode))
 	return []byte(result), messages.MessageType(msgType)
 }
 
-func (trezor *trezor) EncryptKey(path string, decryptedKey []byte, nonce []byte, trezorKeyname string) ([]byte, error) {
+func (trezor *TrezorBase) EncryptKey(path string, decryptedKey []byte, nonce []byte, trezorKeyname string) ([]byte, error) {
 	// note: decryptedKey length should be aligned to 16 bytes
 
-	trezor.CheckTrezorConnection()
+	trezor.CheckConnection()
 
 	encryptedKey, msgTypeInt := trezor.CipherKeyValue(path, true, trezorKeyname, decryptedKey, nonce, false, true)
 
@@ -135,10 +131,10 @@ func (trezor *trezor) EncryptKey(path string, decryptedKey []byte, nonce []byte,
 	return encryptedKey, nil
 }
 
-func (trezor *trezor) DecryptKey(path string, encryptedKey []byte, nonce []byte, trezorKeyname string) ([]byte, error) {
+func (trezor *TrezorBase) DecryptKey(path string, encryptedKey []byte, nonce []byte, trezorKeyname string) ([]byte, error) {
 	// note: encryptedKey length should be aligned to 16 bytes
 
-	trezor.CheckTrezorConnection()
+	trezor.CheckConnection()
 
 	// library "tesoro" requires hex-ed value for decryption
 	encryptedKeyhexValue := hex.EncodeToString(encryptedKey)
