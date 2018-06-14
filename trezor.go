@@ -86,6 +86,11 @@ func (trezor *trezor) call(msg []byte) (string, uint16) {
 	return result, msgType
 }
 
+func (trezor *trezor) ping(pingMsg string) (string, messages.MessageType) {
+	pongMsg, msgType := trezor.Client.Call(trezor.Client.Ping(pingMsg, false, false, false))
+	return pongMsg, messages.MessageType(msgType)
+}
+
 func (trezor *trezor) Ping() bool {
 	if trezor.Device == nil {
 		return false
@@ -93,8 +98,8 @@ func (trezor *trezor) Ping() bool {
 	if _, err := trezor.Device.HIDReport(); err != nil {
 		return false
 	}
-	str, _ := trezor.Client.Call(trezor.Client.Ping("gocryptfs", false, false, false))
-	return str == "gocryptfs"
+	pongMsg, _ := trezor.ping("ping")
+	return pongMsg == "ping"
 }
 
 func (trezor *trezor) CheckTrezorConnection() {

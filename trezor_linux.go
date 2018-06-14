@@ -7,6 +7,7 @@ import (
 	"log"
 
 	"github.com/conejoninja/tesoro/transport"
+	"github.com/conejoninja/tesoro/pb/messages"
 	"github.com/zserge/hid"
 )
 
@@ -39,8 +40,16 @@ func (trezor *trezor) Reconnect() error {
 				log.Print("Cannot continue without Trezor devices.")
 				return ErrNoTrezor
 			}
-		} else if !trezor.Ping() {
-			log.Panic("An unexpected behaviour of the trezor device.")
+		} else {
+			pongMsg, msgType := trezor.ping("ping")
+			if pongMsg != "ping" {
+				switch msgType {
+				case messages.MessageType_MessageType_Success:
+					log.Fatal("The trezor device seems to be not initialized")
+				default:
+					log.Panic(fmt.Errorf("An unexpected behaviour of the trezor device: %v: %v", msgType, pongMsg))
+				}
+			}
 		}
 	}
 	return nil
