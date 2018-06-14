@@ -116,14 +116,23 @@ func (trezor *trezor) CipherKeyValue(path string, isToEncrypt bool, keyName stri
 	return []byte(result), messages.MessageType(msgType)
 }
 
-func (trezor *trezor) EncryptKey(path string, decryptedKey []byte, nonce []byte, trezorKeyname string) []byte {
+func (trezor *trezor) EncryptKey(path string, decryptedKey []byte, nonce []byte, trezorKeyname string) ([]byte, error) {
 	// note: decryptedKey length should be aligned to 16 bytes
 
 	trezor.CheckTrezorConnection()
 
-	encryptedKey, _ := trezor.CipherKeyValue(path, true, trezorKeyname, decryptedKey, nonce, false, true)
+	encryptedKey, msgTypeInt := trezor.CipherKeyValue(path, true, trezorKeyname, decryptedKey, nonce, false, true)
 
-	return encryptedKey
+	msgType := messages.MessageType(msgTypeInt)
+	switch msgType {
+	case messages.MessageType_MessageType_Success, messages.MessageType_MessageType_CipheredKeyValue:
+	case messages.MessageType_MessageType_Failure:
+		return nil, fmt.Errorf("Got an error from a trezor device: %v", string(encryptedKey))
+	default:
+		return nil, fmt.Errorf("Got an unexpected behaviour from a trezor device: %v: %v", msgType, string(encryptedKey))
+	}
+
+	return encryptedKey, nil
 }
 
 func (trezor *trezor) DecryptKey(path string, encryptedKey []byte, nonce []byte, trezorKeyname string) ([]byte, error) {
@@ -142,8 +151,12 @@ func (trezor *trezor) DecryptKey(path string, encryptedKey []byte, nonce []byte,
 
 	decryptedKey, msgType := trezor.CipherKeyValue(path, false, trezorKeyname, []byte(encryptedKeyhexValue), nonce, false, true)
 
-	if msgType == messages.MessageType_MessageType_Failure {
-		return nil, fmt.Errorf("trezor: %v", string(decryptedKey)) // if an error occurs then the error description is returned into "decryptedKey" as a string
+	switch msgType {
+	case messages.MessageType_MessageType_Success, messages.MessageType_MessageType_CipheredKeyValue:
+	case messages.MessageType_MessageType_Failure:
+		return nil, fmt.Errorf("Got an error from a trezor device: %v", string(decryptedKey)) // if an error occurs then the error description is returned into "decryptedKey" as a string
+	default:
+		return nil, fmt.Errorf("Got an unexpected behaviour from a trezor device: %v: %v", msgType, string(encryptedKey))
 	}
 
 	return decryptedKey, nil
