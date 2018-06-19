@@ -32,7 +32,7 @@ func (trezor *TrezorBase) SetHIDDevice(device hid.Device) {
 	var t transport.TransportHID
 	t.SetDevice(device)
 	trezor.Client.SetTransport(&t)
-	trezor.USBHIDWalletBase.SetDevice(device)
+	trezor.USBHIDWalletBase.SetHIDDevice(device)
 }
 
 func (trezor *TrezorBase) call(msg []byte) (string, uint16) {
@@ -77,10 +77,10 @@ func (trezor *TrezorBase) ping(pingMsg string) (string, messages.MessageType) {
 }
 
 func (trezor *TrezorBase) Ping() error {
-	if trezor.USBHIDWalletBase.GetDevice() == nil {
+	if trezor.USBHIDWalletBase.GetHIDDevice() == nil {
 		return fmt.Errorf("trezor.USBHIDWalletBase.GetDevice() == nil")
 	}
-	if _, err := trezor.USBHIDWalletBase.GetDevice().HIDReport(); err != nil {
+	if _, err := trezor.USBHIDWalletBase.GetHIDDevice().HIDReport(); err != nil {
 		return err
 	}
 	pongMsg, msgType := trezor.ping("ping")

@@ -5,6 +5,8 @@ import (
 )
 
 type WalletBase struct {
+	name string
+
 	getPin     func(title, description, ok, cancel string) ([]byte, error)
 	getConfirm func(title, description, ok, cancel string) (bool, error)
 }
@@ -25,6 +27,14 @@ func (base *WalletBase) GetConfirm(title, description, ok, cancel string) (bool,
 	return base.getConfirm(title, description, ok, cancel)
 }
 
+func (base WalletBase) Name() string {
+	return base.name
+}
+
+func (base *WalletBase) SetName(newName string) {
+	base.name = newName
+}
+
 type USBHIDWalletBase struct {
 	WalletBase
 	device      hid.Device
@@ -33,7 +43,7 @@ type USBHIDWalletBase struct {
 	interfaceId uint8
 }
 
-func (base *USBHIDWalletBase) SetDevice(device hid.Device) {
+func (base *USBHIDWalletBase) SetHIDDevice(device hid.Device) {
 	base.device = device
 	info := device.Info()
 	base.vendorId = info.Vendor
@@ -53,6 +63,6 @@ func (base USBHIDWalletBase) GetInterfaceId() uint8 {
 	return base.interfaceId
 }
 
-func (base USBHIDWalletBase) GetDevice() hid.Device {
+func (base USBHIDWalletBase) GetHIDDevice() hid.Device {
 	return base.device
 }
