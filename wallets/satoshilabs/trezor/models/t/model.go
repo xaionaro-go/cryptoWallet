@@ -1,8 +1,8 @@
 package trezorT
 
 import (
-	trezorBase "github.com/xaionaro-go/cryptoWallet/wallets/satoshilabs/trezor"
 	I "github.com/xaionaro-go/cryptoWallet/interfaces"
+	trezorBase "github.com/xaionaro-go/cryptoWallet/wallets/satoshilabs/trezor"
 	"github.com/zserge/hid"
 )
 
