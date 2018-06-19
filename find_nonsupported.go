@@ -7,7 +7,7 @@ import (
 	"log"
 )
 
-func Find() (result I.Wallet) {
+func Find(filter Filter) I.Wallet {
 	log.Panic("cryptowallets are not supported on this platform :(")
 	return nil
 }
