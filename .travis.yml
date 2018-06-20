@@ -1,0 +1,18 @@
+language: go
+
+# Build with the lastest point releases of Go 1.5 and later
+go:
+  - 1.5.x
+  - 1.6.x
+  - 1.7.x
+  - 1.8.x
+  - 1.9.x
+  - 1.10.x
+  - stable
+
+install:
+  - go get -v ./...
+
+script:
+  - go build -v ./...
+  - go vet ./...
