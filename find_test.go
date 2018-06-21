@@ -76,7 +76,7 @@ func ExampleFindAny() {
 		return
 	}
 
-	// ATM, if PIN was correct then: string(masterKey) == string(decryptedMasterKey[:len(masterKey)])
+	// At the moment: string(masterKey) == string(decryptedMasterKey[:len(masterKey)])
 	if string(decryptedMasterKey[:len(masterKey)]) != string(masterKey) {
 		// Something is wrong
 	}
