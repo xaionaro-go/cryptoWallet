@@ -1,8 +1,8 @@
-package main
+package cryptoWallet
 
 import (
-	"fmt"
-	"github.com/xaionaro-go/cryptoWallet"
+	"testing"
+
 	"github.com/xaionaro-go/pinentry"
 )
 
@@ -32,10 +32,11 @@ func checkError(err error) {
 	}
 }
 
-func main() {
-	wallet := cryptoWallet.FindAny()
+func TestFindAny(t *testing.T) {
+	wallet := FindAny()
 	if wallet == nil {
-		panic("No wallets found")
+		t.Error("No wallets found")
+		return
 	}
 
 	err := wallet.Ping()
@@ -55,8 +56,7 @@ func main() {
 	decryptedMasterKey, err := wallet.DecryptKey(`m/3'/14'/15'/93'`, encryptedMasterKey, []byte{}, "aWalletKeyName")
 	checkError(err)
 
-	fmt.Printf("%v (%d)\n", string(masterKey), len(masterKey))
-	fmt.Println(encryptedMasterKey)
-	fmt.Printf("%v (%d)\n", string(decryptedMasterKey), len(decryptedMasterKey))
-	fmt.Println(decryptedMasterKey)
+	if string(masterKey) != string(decryptedMasterKey[:len(masterKey)]) {
+		t.Error("masterKey != decrypterMasterKey")
+	}
 }

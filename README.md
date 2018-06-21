@@ -6,7 +6,6 @@ Supported devices:
 | ------ | ------- | --------- | ---------- | ------- | ----- |
 | SatoshiLabs | Bitcoin Wallet [TREZOR] | 0x534c | 0x0001 | 1.6.0 |Tested on Linux |
 
-See `example/`:
 ```go
 [...]
 wallet := cryptoWallet.FindAny()
