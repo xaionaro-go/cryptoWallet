@@ -8,9 +8,9 @@ import (
 	"github.com/conejoninja/tesoro"
 	"github.com/conejoninja/tesoro/pb/messages"
 	"github.com/conejoninja/tesoro/transport"
-	I "github.com/xaionaro-go/cryptoWallet/interfaces"
-	routines "github.com/xaionaro-go/cryptoWallet/routines"
-	base "github.com/xaionaro-go/cryptoWallet/wallets/satoshilabs"
+	I "github.com/xaionaro-go/cryptoWallet/internal/interfaces"
+	routines "github.com/xaionaro-go/cryptoWallet/internal/routines"
+	base "github.com/xaionaro-go/cryptoWallet/internal/wallets/satoshilabs"
 	"github.com/zserge/hid"
 )
 

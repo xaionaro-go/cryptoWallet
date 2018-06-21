@@ -1,7 +1,7 @@
 package vendors
 
 import (
-	I "github.com/xaionaro-go/cryptoWallet/interfaces"
+	I "github.com/xaionaro-go/cryptoWallet/internal/interfaces"
 	"github.com/zserge/hid"
 )
 

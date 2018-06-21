@@ -3,11 +3,10 @@
 package cryptoWallet
 
 import (
-	I "github.com/xaionaro-go/cryptoWallet/interfaces"
 	"log"
 )
 
-func Find(filter Filter) I.Wallet {
+func Find(filter Filter) Wallet {
 	log.Panic("cryptowallets are not supported on this platform :(")
 	return nil
 }

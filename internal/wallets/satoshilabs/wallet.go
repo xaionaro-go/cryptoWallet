@@ -1,7 +1,7 @@
 package satoshilabsWallet
 
 import (
-	base "github.com/xaionaro-go/cryptoWallet/wallets"
+	base "github.com/xaionaro-go/cryptoWallet/internal/wallets"
 )
 
 type SatoshilabsWalletBase struct {

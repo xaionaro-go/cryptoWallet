@@ -3,12 +3,11 @@
 package cryptoWallet
 
 import (
-	I "github.com/xaionaro-go/cryptoWallet/interfaces"
 	"github.com/xaionaro-go/cryptoWallet/vendors"
 	"github.com/zserge/hid"
 )
 
-func Find(filter Filter) (result I.Wallet) {
+func Find(filter Filter) (result Wallet) {
 	if filter.IsUSBHID != nil {
 		if *filter.IsUSBHID != true {
 			return

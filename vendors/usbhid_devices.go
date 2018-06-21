@@ -3,7 +3,7 @@ package vendors
 import (
 	"strings"
 
-	trezorOne "github.com/xaionaro-go/cryptoWallet/wallets/satoshilabs/trezor/models/1"
+	trezorOne "github.com/xaionaro-go/cryptoWallet/internal/wallets/satoshilabs/trezor/models/1"
 )
 
 type USBHIDDevice struct {
