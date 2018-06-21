@@ -20,7 +20,7 @@ import (
 //
 // - If the `filter` is empty then it will search for any wallets
 //
-// At the momemnt the only supported platform is Linux
+// At the moment the only supported platform is Linux
 func Find(filter Filter) (result []Wallet) {
 	if filter.IsUSBHID != nil {
 		if *filter.IsUSBHID != true {
