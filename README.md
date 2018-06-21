@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/xaionaro-go/cryptoWallet.svg?branch=master)](https://travis-ci.org/xaionaro-go/cryptoWallet)
+
 Supported devices:
 
 | Vendor | Product | Vendor ID | Product ID | Version | Notes |

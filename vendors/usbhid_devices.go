@@ -27,5 +27,4 @@ func GetVendorId(vendorName string) uint16 {
 		return 0x534c
 	}
 	panic("unknown vendorName: " + vendorName)
-	return 0
 }
