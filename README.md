@@ -4,9 +4,9 @@
 
 Supported devices:
 
-| Vendor | Product | Vendor ID | Product ID | Version | Notes |
-| ------ | ------- | --------- | ---------- | ------- | ----- |
-| SatoshiLabs | Bitcoin Wallet [TREZOR] | 0x534c | 0x0001 | 1.6.0 |Tested on Linux |
+| Vendor | Product | Product (lsusb) | Vendor ID | Product ID | Version | Notes |
+| ------ | ------- | --------------- | --------- | ---------- | ------- | ----- |
+| SatoshiLabs | Trezor One | Bitcoin Wallet [TREZOR] | 0x534c | 0x0001 | 1.6.0 |Tested on Linux |
 
 ```go
 [...]
