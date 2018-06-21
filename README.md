@@ -1,4 +1,6 @@
-[![Build Status](https://travis-ci.org/xaionaro-go/cryptoWallet.svg?branch=master)](https://travis-ci.org/xaionaro-go/cryptoWallet) [![go report](https://goreportcard.com/badge/github.com/xaionaro-go/cryptoWallet)](https://goreportcard.com/report/github.com/xaionaro-go/cryptoWallet)
+[![Build Status](https://travis-ci.org/xaionaro-go/cryptoWallet.svg?branch=master)](https://travis-ci.org/xaionaro-go/cryptoWallet)
+[![go report](https://goreportcard.com/badge/github.com/xaionaro-go/cryptoWallet)](https://goreportcard.com/report/github.com/xaionaro-go/cryptoWallet)
+[![GoDoc](https://godoc.org/github.com/xaionaro-go/cryptoWallet?status.svg)](https://godoc.org/github.com/xaionaro-go/cryptoWallet)
 
 Supported devices:
 
