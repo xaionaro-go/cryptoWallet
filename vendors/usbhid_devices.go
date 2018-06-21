@@ -22,16 +22,21 @@ func (d USBHIDDevice) New(device hid.Device) I.Wallet {
 }
 
 // USBHIDDevices just a map: map[vendorID][productID]*USBHIDDevice
+//
 // USBHIDDevice is a factory
 type USBHIDDevices map[uint16]map[uint16]*USBHIDDevice
 
-// GetUSBHIDDevices returnes a map of a vendorID and a productID to a object
+// GetUSBHIDDevices returns a map of a vendorID and a productID to a object
 // factory to a crypto wallet device
 //
 // example:
+//
 // ```
+//
 // deviceMeta := GetUSBHIDDevices()[0x534c][0x0001]
+//
 // deviceMeta.Factory(hidDevice, deviceMeta.Name)
+//
 // ```
 func GetUSBHIDDevices() USBHIDDevices {
 	return USBHIDDevices{
@@ -43,7 +48,7 @@ func GetUSBHIDDevices() USBHIDDevices {
 	}
 }
 
-// GetVendorID returns vendorID of an USB device using vendor name for known
+// GetVendorID returns a vendorID of an USB device using vendor name for known
 // devices
 func GetVendorID(vendorName string) uint16 {
 	switch strings.ToLower(vendorName) {

@@ -32,10 +32,9 @@ func checkError(err error) {
 	}
 }
 
-func TestFindAny(t *testing.T) {
+func ExampleFindAny() {
 	wallet := FindAny()
 	if wallet == nil {
-		t.Error("No wallets found")
 		return
 	}
 
@@ -50,13 +49,19 @@ func TestFindAny(t *testing.T) {
 
 	masterKey := []byte("some key here")
 
-	encryptedMasterKey, err := wallet.EncryptKey(`m/3'/14'/15'/93'`, masterKey, []byte{}, "aWalletKeyName")
+	encryptedMasterKey, err := wallet.EncryptKey(`m/3'/14'/15'`, masterKey, []byte{}, "aWalletKeyName")
 	checkError(err)
 
-	decryptedMasterKey, err := wallet.DecryptKey(`m/3'/14'/15'/93'`, encryptedMasterKey, []byte{}, "aWalletKeyName")
+	decryptedMasterKey, err := wallet.DecryptKey(`m/3'/14'/15'`, encryptedMasterKey, []byte{}, "aWalletKeyName")
 	checkError(err)
 
 	if string(masterKey) != string(decryptedMasterKey[:len(masterKey)]) {
-		t.Error("masterKey != decrypterMasterKey")
+		return
 	}
+
+	return
+}
+
+func TestFindAny(t *testing.T) {
+	ExampleFindAny()
 }
