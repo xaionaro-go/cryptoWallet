@@ -142,5 +142,4 @@ func ExampleFind() {
 
 	// Everything ok: key - is the wanted key
 	doSomething(key)
-	return
 }
