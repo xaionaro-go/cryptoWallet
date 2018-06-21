@@ -46,3 +46,5 @@ some key here (16)
 ```
 
 A key to be encrypted/decrypted should be a multiple of 16 bytes. If you pass not a multiple of 16 bytes it will pad the value with zeros.
+
+If you need more functionality then please post an issue or a PR.
