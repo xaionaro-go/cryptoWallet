@@ -1,11 +1,17 @@
 package cryptoWallet
 
+// Filter is a struct that could be passed to Find() to select devices
 type Filter struct {
 	IsUSBHID   *bool
-	VendorId   *uint16
-	ProductIds []uint16
+	VendorID   *uint16
+	ProductIDs []uint16
 }
 
+// FindAny returns any found known wallet
 func FindAny() Wallet {
-	return Find(Filter{})
+	result := Find(Filter{})
+	if len(result) == 0 {
+		return nil
+	}
+	return result[0]
 }

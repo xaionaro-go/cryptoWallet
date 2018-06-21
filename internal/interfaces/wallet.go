@@ -4,6 +4,7 @@ import (
 	"github.com/zserge/hid"
 )
 
+// Wallet is an abstract interface over all supported Wallets
 type Wallet interface {
 	// Sets a function to be called when it's required to enter a PIN or a passphrase
 	SetGetPinFunc(func(title, description, ok, cancel string) ([]byte, error))
@@ -36,12 +37,13 @@ type Wallet interface {
 	Name() string
 }
 
+// USBHIDWallet is an abstract interface over USB HID Wallets
 type USBHIDWallet interface {
 	Wallet
 
 	SetHIDDevice(device hid.Device)
 
-	GetProductId() uint16
-	GetVendorId() uint16
-	GetInterfaceId() uint8
+	GetProductID() uint16
+	GetVendorID() uint16
+	GetInterfaceID() uint8
 }

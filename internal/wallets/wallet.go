@@ -50,33 +50,33 @@ func (base *WalletBase) SetName(newName string) {
 type USBHIDWalletBase struct {
 	WalletBase
 	device      hid.Device
-	vendorId    uint16
-	productId   uint16
-	interfaceId uint8
+	vendorID    uint16
+	productID   uint16
+	interfaceID uint8
 }
 
 // SetHIDDevice sets an USB HID device to be used
 func (base *USBHIDWalletBase) SetHIDDevice(device hid.Device) {
 	base.device = device
 	info := device.Info()
-	base.vendorId = info.Vendor
-	base.productId = info.Product
-	base.interfaceId = info.Interface
+	base.vendorID = info.Vendor
+	base.productID = info.Product
+	base.interfaceID = info.Interface
 }
 
-// GetVendorId returns USB device vendor ID
-func (base USBHIDWalletBase) GetVendorId() uint16 {
-	return base.vendorId
+// GetVendorID returns USB device vendor ID
+func (base USBHIDWalletBase) GetVendorID() uint16 {
+	return base.vendorID
 }
 
-// GetProductId returns USB device product ID
-func (base USBHIDWalletBase) GetProductId() uint16 {
-	return base.productId
+// GetProductID returns USB device product ID
+func (base USBHIDWalletBase) GetProductID() uint16 {
+	return base.productID
 }
 
-// GetInterfaceId returns USB device interface ID
-func (base USBHIDWalletBase) GetInterfaceId() uint8 {
-	return base.interfaceId
+// GetInterfaceID returns USB device interface ID
+func (base USBHIDWalletBase) GetInterfaceID() uint8 {
+	return base.interfaceID
 }
 
 // GetHIDDevice returns previously set USB HID device

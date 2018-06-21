@@ -6,20 +6,22 @@ import (
 	"fmt"
 	"log"
 
+	"github.com/xaionaro-go/cryptoWallet/internal/errors"
 	I "github.com/xaionaro-go/cryptoWallet/internal/interfaces"
 	"github.com/zserge/hid"
 )
 
-var (
-	ErrNoWallet = fmt.Errorf("The wallet device is not found.")
-)
-
+// USBHIDReconnect tries to reconnect to find and reconnect to the
+// USB HID device of the wallet `parent`.
+//
+// If the wallet is not found it calls GetConfirm method of the `parent` to
+// get a confirmation that it's required to try one more time.
 func USBHIDReconnect(parent I.USBHIDWallet) error {
 	success := false
 	for !success {
 		hid.UsbWalk(func(device hid.Device) {
 			info := device.Info()
-			if info.Vendor == parent.GetVendorId() && info.Product == parent.GetProductId() && info.Interface == parent.GetInterfaceId() {
+			if info.Vendor == parent.GetVendorID() && info.Product == parent.GetProductID() && info.Interface == parent.GetInterfaceID() {
 				parent.SetHIDDevice(device)
 				success = true
 				return
@@ -32,7 +34,7 @@ func USBHIDReconnect(parent I.USBHIDWallet) error {
 				return err
 			}
 			if !shouldContinue {
-				return ErrNoWallet
+				return errors.ErrNoWallet
 			}
 		} else {
 			err := parent.Ping()

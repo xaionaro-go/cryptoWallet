@@ -7,31 +7,39 @@ import (
 	"github.com/zserge/hid"
 )
 
-func Find(filter Filter) (result Wallet) {
+// Find returns all known wallets that fits to the `filter`.
+//
+// - If `filter.IsUSBHID` is nil then it will search for both USB HID and not
+// devices
+// - If `filter.VendorId` is nil then it will search for any vendor and product
+// IDs
+// - If `filter.ProductIds` is an empty slice and `filter.VendorId` is not nil
+// then it will search for any products of the defined vendor ID.
+// - If the `filter` is empty then it will search for any wallets
+//
+// At the momemnt the only supported platform is Linux
+func Find(filter Filter) (result []Wallet) {
 	if filter.IsUSBHID != nil {
 		if *filter.IsUSBHID != true {
 			return
 		}
 	}
 	possibleUSBHIDDevices := vendors.GetUSBHIDDevices()
-	wantedProductId := map[uint16]bool{}
-	for _, productId := range filter.ProductIds {
-		wantedProductId[productId] = true
+	wantedProductID := map[uint16]bool{}
+	for _, productID := range filter.ProductIDs {
+		wantedProductID[productID] = true
 	}
 
 	hid.UsbWalk(func(device hid.Device) {
-		if result != nil {
-			return
-		}
 		info := device.Info()
-		if filter.VendorId != nil {
-			if info.Vendor != *filter.VendorId {
+		if filter.VendorID != nil {
+			if info.Vendor != *filter.VendorID {
 				return
 			}
-		}
-		if len(filter.ProductIds) > 0 {
-			if !wantedProductId[info.Product] {
-				return
+			if len(filter.ProductIDs) > 0 {
+				if !wantedProductID[info.Product] {
+					return
+				}
 			}
 		}
 		if possibleUSBHIDDevices[info.Vendor] == nil {
@@ -40,8 +48,7 @@ func Find(filter Filter) (result Wallet) {
 		if possibleUSBHIDDevices[info.Vendor][info.Product] == nil {
 			return
 		}
-		deviceMeta := possibleUSBHIDDevices[info.Vendor][info.Product]
-		result = deviceMeta.Factory(device, deviceMeta.Name)
+		result = append(result, possibleUSBHIDDevices[info.Vendor][info.Product].New(device))
 	})
 
 	return
