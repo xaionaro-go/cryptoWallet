@@ -15,5 +15,7 @@ install:
 
 script:
   - go build -v ./...
-  - gp get github.com/xaionaro-go/pinentry
+  - go get github.com/xaionaro-go/pinentry
   - go vet ./...
+  - go get github.com/rfjakob/gocryptfs
+  - ./.travis-check-backdeps.sh
