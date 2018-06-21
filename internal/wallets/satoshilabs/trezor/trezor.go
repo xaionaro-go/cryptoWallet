@@ -119,9 +119,12 @@ func (trezor *TrezorBase) CipherKeyValue(path string, isToEncrypt bool, keyName 
 // should be a multiple of 16 bytes.
 //
 // - `path` is a BIP32 path;
+//
 // - `decryptedKey` is a key to be encrypted;
+//
 // - `nonce` is optional "number that can only be used once",
 //    see https://en.wikipedia.org/wiki/Cryptographic_nonce;
+//
 // - `trezorKeyname` is a key name that affects on encrypts and displays
 //    on the screen of a trezor device.
 func (trezor *TrezorBase) EncryptKey(path string, decryptedKey []byte, nonce []byte, trezorKeyname string) ([]byte, error) {
@@ -147,9 +150,12 @@ func (trezor *TrezorBase) EncryptKey(path string, decryptedKey []byte, nonce []b
 // should be a multiple of 16 bytes.
 //
 // - `path` is a BIP32 path;
+//
 // - `encryptedKey` is a key to be decrypted;
+//
 // - `nonce` is "number that can only be used once",
 //    see https://en.wikipedia.org/wiki/Cryptographic_nonce;
+//
 // - `trezorKeyname` is a key name that affects on encrypts and displays
 //    on the screen of a trezor device.
 func (trezor *TrezorBase) DecryptKey(path string, encryptedKey []byte, nonce []byte, trezorKeyname string) ([]byte, error) {
