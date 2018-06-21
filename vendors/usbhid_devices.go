@@ -16,7 +16,7 @@ func GetUSBHIDDevices() USBHIDDevices {
 		// SatoshiLabs
 		0x534c: map[uint16]*USBHIDDevice{
 			// Trezor One
-			0x0001: &USBHIDDevice{Device: Device{Name: "Trezor One", Factory: trezorOne.New}},
+			0x0001: {Device: Device{Name: "Trezor One", Factory: trezorOne.New}},
 		},
 	}
 }
