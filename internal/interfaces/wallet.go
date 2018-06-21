@@ -8,13 +8,13 @@ type Wallet interface {
 	// Sets a function to be called when it's required to enter a PIN or a passphrase
 	SetGetPinFunc(func(title, description, ok, cancel string) ([]byte, error))
 
-	// Sets a function to be called when it's required to get a confirm
+	// Sets a function to be called when it's required to get a confirmation
 	SetGetConfirmFunc(func(title, description, ok, cancel string) (bool, error))
 
-	// Call a function to get a PIN
+	// Call a function to get a PIN or a passphrase
 	GetPin(title, description, ok, cancel string) ([]byte, error)
 
-	// Call a function to get a confirm
+	// Call a function to get a confirmation
 	GetConfirm(title, description, ok, cancel string) (bool, error)
 
 	// Checks the connection to the device and reconnects if required
