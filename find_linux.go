@@ -10,12 +10,12 @@ import (
 // Find returns all known wallets that fits to the `filter`.
 //
 // - If `filter.IsUSBHID` is nil then it will search for both USB HID and not
-// devices
+// USB HID devices
 //
-// - If `filter.VendorId` is nil then it will search for any vendor and product
+// - If `filter.VendorID` is nil then it will search for any vendor and product
 // IDs
 //
-// - If `filter.ProductIds` is an empty slice and `filter.VendorId` is not nil
+// - If `filter.ProductIDs` is an empty slice and `filter.VendorID` is not nil
 // then it will search for any products of the defined vendor ID.
 //
 // - If the `filter` is empty then it will search for any wallets
@@ -51,7 +51,10 @@ func Find(filter Filter) (result []Wallet) {
 		if possibleUSBHIDDevices[info.Vendor][info.Product] == nil {
 			return
 		}
-		result = append(result, possibleUSBHIDDevices[info.Vendor][info.Product].New(device))
+		if possibleUSBHIDDevices[info.Vendor][info.Product][info.Interface] == nil {
+			return
+		}
+		result = append(result, possibleUSBHIDDevices[info.Vendor][info.Product][info.Interface].New(device))
 	})
 
 	return
