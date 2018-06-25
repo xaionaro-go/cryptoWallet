@@ -49,7 +49,7 @@ func GetUSBHIDDevices() USBHIDDevices {
 		// SatoshiLabs
 		0x534c: map[uint16]map[uint8]*USBHIDDevice{
 			// Trezor One
-			0x0001: map[uint8]*USBHIDDevice{
+			0x0001: {
 				// See https://github.com/trezor/trezor-mcu/blob/826b764085c0e637eed5bf631bacea964327289d/firmware/usb.c#L32
 				0x00: {deviceBase: deviceBase{name: "Trezor One"}, factory: trezorOne.New}, // the main interface
 				//0x01: , // U2F interface
