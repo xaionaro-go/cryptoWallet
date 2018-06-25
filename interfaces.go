@@ -9,7 +9,7 @@ type Wallet interface {
 	SetGetConfirmFunc(func(title, description, ok, cancel string) (bool, error))
 
 	// Resets the device and check if it is initialized. Call this
-	// function before other function to be sure that the device is in an
+	// function before other functions to be sure that the device is in an
 	// expected state.
 	Reset() error
 
