@@ -72,12 +72,12 @@ func (trezor *TrezorBase) ping(pingMsg string) (string, messages.MessageType) {
 }
 
 type initializeResponse struct {
-	Vendor          string
-	MajorVersion    int
-	MinorVersion    int
-	PatchVersion    int
-	BootloaderMode  bool
-	FirmwarePresent bool
+	Vendor          string `json:"vendor"`
+	MajorVersion    int    `json:"major_version"`
+	MinorVersion    int    `json:"minor_version"`
+	PatchVersion    int    `json:"patch_version"`
+	BootloaderMode  bool   `json:"bootloader_mode"`
+	FirmwarePresent bool   `json:"firmware_present"`
 }
 
 // Reset sends an empty initialize package and checkes if the response
@@ -89,7 +89,7 @@ type initializeResponse struct {
 func (trezor *TrezorBase) Reset() error {
 	str, msgTypeRaw := trezor.call(trezor.Client.Initialize())
 	msgType := messages.MessageType(msgTypeRaw)
-	if msgType != messages.MessageType_MessageType_Success {
+	if msgType != messages.MessageType_MessageType_Features {
 		return fmt.Errorf("Got an unexpected behaviour from a trezor device: %v: %v", msgType, str)
 	}
 
