@@ -18,6 +18,13 @@ type Wallet interface {
 	// Call a function to get a confirmation
 	GetConfirm(title, description, ok, cancel string) (bool, error)
 
+	// Resets the device and check if it is initialized. Call this
+	// function before other function to be sure that the device is in an
+	// expected state.
+	//
+	// See also: https://doc.satoshilabs.com/trezor-tech/api-workflows.html#initialize-features
+	Reset() error
+
 	// Checks the connection to the device and reconnects if required
 	CheckConnection() error
 

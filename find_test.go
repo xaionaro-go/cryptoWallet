@@ -53,6 +53,15 @@ func ExampleFindAny() {
 		return
 	}
 
+	// Put the device to the initial state. This also checks if the device
+	// is initialized
+	err := wallet.Reset()
+	if err != nil {
+		// Process the error here. For example, if device is not
+		// initialized (ErrNotInitialized)
+		return
+	}
+
 	// Setting required handlers
 	wallet.SetGetPinFunc(getPin)
 	wallet.SetGetConfirmFunc(getConfirm)
@@ -108,6 +117,15 @@ func ExampleFind() {
 
 	// Using the first found device
 	trezor := trezors[0]
+
+	// Put the device to the initial state. This also checks if the device
+	// is initialized
+	err := trezor.Reset()
+	if err != nil {
+		// Process the error here. For example, if device is not
+		// initialized (ErrNotInitialized)
+		return
+	}
 
 	// Trezor may ask for PIN or Passphrase. Setting the handler for this case.
 	trezor.SetGetPinFunc(getPin)

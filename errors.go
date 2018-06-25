@@ -5,6 +5,11 @@ import (
 )
 
 var (
-	// ErrNoWallet is returned when lost the connection with the wallet device
+	// ErrNoWallet is returned when lost the connection with the wallet
+	// device
 	ErrNoWallet = errors.ErrNoWallet
+
+	// ErrNotInitialized is returned when trying to do an action requires
+	// an initialized device on a not initialized device
+	ErrNotInitialized = errors.ErrNotInitialized
 )

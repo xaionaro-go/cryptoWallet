@@ -2,12 +2,14 @@ package trezorBase
 
 import (
 	"encoding/hex"
+	"encoding/json"
 	"fmt"
 	"log"
 
 	"github.com/conejoninja/tesoro"
 	"github.com/conejoninja/tesoro/pb/messages"
 	"github.com/conejoninja/tesoro/transport"
+	"github.com/xaionaro-go/cryptoWallet/internal/errors"
 	routines "github.com/xaionaro-go/cryptoWallet/internal/routines"
 	"github.com/xaionaro-go/cryptoWallet/internal/wallets/satoshilabs"
 	"github.com/zserge/hid"
@@ -67,6 +69,44 @@ func (trezor *TrezorBase) call(msg []byte) (string, uint16) {
 func (trezor *TrezorBase) ping(pingMsg string) (string, messages.MessageType) {
 	pongMsg, msgType := trezor.Client.Call(trezor.Client.Ping(pingMsg, false, false, false))
 	return pongMsg, messages.MessageType(msgType)
+}
+
+type initializeResponse struct {
+	Vendor          string
+	MajorVersion    int
+	MinorVersion    int
+	PatchVersion    int
+	BootloaderMode  bool
+	FirmwarePresent bool
+}
+
+// Reset sends an empty initialize package and checkes if the response
+// is correct. This function resets the state of the device and checks
+// if it is initialized. If the device is not initialized then
+// ErrNotInitialized will be returned.
+//
+// See also: https://doc.satoshilabs.com/trezor-tech/api-workflows.html#initialize-features
+func (trezor *TrezorBase) Reset() error {
+	str, msgTypeRaw := trezor.call(trezor.Client.Initialize())
+	msgType := messages.MessageType(msgTypeRaw)
+	if msgType != messages.MessageType_MessageType_Success {
+		return fmt.Errorf("Got an unexpected behaviour from a trezor device: %v: %v", msgType, str)
+	}
+
+	// An example of not the answer of a not initialized device:
+	//
+	// {"vendor":"bitcointrezor.com","major_version":1,"minor_version":4,"patch_version":0,"bootloader_mode":true,"firmware_present":false}
+	var response initializeResponse
+	err := json.Unmarshal([]byte(str), &response)
+	if err != nil {
+		return err
+	}
+
+	if response.BootloaderMode {
+		return errors.ErrNotInitialized
+	}
+
+	return nil
 }
 
 // Ping checks if the device answers correctly to a ping
