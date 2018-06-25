@@ -13,6 +13,9 @@ Supported devices:
 wallet := cryptoWallet.FindAny()
 [...]
 
+err := wallet.Reset()
+checkError(err)
+
 masterKey := []byte("some key here")
 
 encryptedMasterKey, err := wallet.EncryptKey(
