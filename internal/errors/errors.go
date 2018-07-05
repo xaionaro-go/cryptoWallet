@@ -12,4 +12,8 @@ var (
 	// ErrNotInitialized is returned when trying to do an action requires
 	// an initialized device on a not initialized device
 	ErrNotInitialized = fmt.Errorf("The wallet device is not initialized.")
+
+	// ErrNotSupportedPlatform is returned/paniced when trying use this library
+	// on an unsupported platform
+	ErrNotSupportedPlatform = fmt.Errorf(`"cryptoWallet" is not supported on this platform :(`)
 )

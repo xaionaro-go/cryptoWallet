@@ -1,3 +1,8 @@
+// +build linux,cgo darwin,!ios,cgo windows,cgo
+
+// The building requirements above a copied from
+// github.com/trezor/usbhid/libusb.go (commit: 519ec1000beb862bbe9b16b99d782ab77787ea18)
+
 package trezorBase
 
 import (
