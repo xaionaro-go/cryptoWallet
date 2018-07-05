@@ -1,3 +1,5 @@
+// +build linux,cgo darwin,!ios,cgo windows,cgo
+
 //-----------------------------------------------------------------------------
 /*
 
@@ -7,8 +9,6 @@ Copyright (c) 2017 Jason T. Harris
 
 */
 //-----------------------------------------------------------------------------
-
-// +build linux,cgo darwin,!ios,cgo windows,cgo
 
 // Package libusb provides go wrappers for libusb-1.0
 package usbhid
