@@ -3,48 +3,54 @@
 	"ignore": "test",
 	"package": [
 		{
-			"checksumSHA1": "833rm4NQ9nVJBERmURHyHL031to=",
+			"checksumSHA1": "HQ+j4FxuCD2AnEpsBmykY8ybVaQ=",
 			"origin": "github.com/conejoninja/tesoro/vendor/github.com/conejoninja/hid",
 			"path": "github.com/conejoninja/hid",
-			"revision": "c93195ea72c020750735218949e2e3e028893d3c",
-			"revisionTime": "2018-07-03T07:07:14Z"
+			"revision": "47433921abad10eaa97c7436f805e014f725d851",
+			"revisionTime": "2018-07-09T14:02:28Z"
 		},
 		{
-			"checksumSHA1": "SdNPKgv8tP0us8BSeABnqGwgB00=",
+			"checksumSHA1": "9hZgZ7zYwkSonlJbqdFkrsFxqe0=",
 			"path": "github.com/conejoninja/tesoro",
-			"revision": "c93195ea72c020750735218949e2e3e028893d3c",
-			"revisionTime": "2018-07-03T07:07:14Z"
+			"revision": "47433921abad10eaa97c7436f805e014f725d851",
+			"revisionTime": "2018-07-09T14:02:28Z"
 		},
 		{
 			"checksumSHA1": "Bbh4laFnYp8838OkoNfpw/ndzJk=",
 			"path": "github.com/conejoninja/tesoro/pb/google/protobuf",
-			"revision": "c93195ea72c020750735218949e2e3e028893d3c",
-			"revisionTime": "2018-07-03T07:07:14Z"
+			"revision": "47433921abad10eaa97c7436f805e014f725d851",
+			"revisionTime": "2018-07-09T14:02:28Z"
 		},
 		{
-			"checksumSHA1": "m9DLL1z8q8peMscTEV1nPKZctiw=",
+			"checksumSHA1": "tsSq+lgDS5GbVwch4+qNGlnBN64=",
 			"path": "github.com/conejoninja/tesoro/pb/messages",
-			"revision": "c93195ea72c020750735218949e2e3e028893d3c",
-			"revisionTime": "2018-07-03T07:07:14Z"
+			"revision": "47433921abad10eaa97c7436f805e014f725d851",
+			"revisionTime": "2018-07-09T14:02:28Z"
 		},
 		{
 			"checksumSHA1": "ZHR7cE09eTMP64dinahEdq1IA9Q=",
 			"path": "github.com/conejoninja/tesoro/pb/types",
-			"revision": "c93195ea72c020750735218949e2e3e028893d3c",
-			"revisionTime": "2018-07-03T07:07:14Z"
+			"revision": "47433921abad10eaa97c7436f805e014f725d851",
+			"revisionTime": "2018-07-09T14:02:28Z"
 		},
 		{
-			"checksumSHA1": "Y8pUnZyksVwwGLpQbhioflWtjCc=",
+			"checksumSHA1": "dNZKg59+kiwiTAwRTe+Q0xz9Pis=",
 			"path": "github.com/conejoninja/tesoro/transport",
-			"revision": "c93195ea72c020750735218949e2e3e028893d3c",
-			"revisionTime": "2018-07-03T07:07:14Z"
+			"revision": "47433921abad10eaa97c7436f805e014f725d851",
+			"revisionTime": "2018-07-09T14:02:28Z"
 		},
 		{
 			"checksumSHA1": "Pyou8mceOASSFxc7GeXZuVdSMi0=",
 			"origin": "github.com/conejoninja/tesoro/vendor/github.com/golang/protobuf/proto",
 			"path": "github.com/golang/protobuf/proto",
-			"revision": "c93195ea72c020750735218949e2e3e028893d3c",
-			"revisionTime": "2018-07-03T07:07:14Z"
+			"revision": "47433921abad10eaa97c7436f805e014f725d851",
+			"revisionTime": "2018-07-09T14:02:28Z"
+		},
+		{
+			"checksumSHA1": "0d+/QLR7AseSlNxMA7//21h3axo=",
+			"path": "github.com/trezor/trezord-go/usb/lowlevel",
+			"revision": "2d224e6e52de1d14fbb31acbe7a377b77d943075",
+			"revisionTime": "2018-07-09T13:16:59Z"
 		},
 		{
 			"checksumSHA1": "BWWKjoMCGR9Z2n4npyrTKqTQch8=",
@@ -54,24 +60,24 @@
 			"revisionTime": "2018-07-03T07:07:14Z"
 		},
 		{
-			"checksumSHA1": "foVP235hDEoY3DFn0VDzCpblXIQ=",
+			"checksumSHA1": "VyEXnqvJk6ukvKrvYDSC1cghLOQ=",
 			"path": "github.com/zserge/hid",
-			"revision": "b5855a5a090afe7e008d85178d979c8d1a6185b5",
-			"revisionTime": "2017-11-09T16:56:38Z"
+			"revision": "c86e7adeabafd6fcb3371ad64d6ed366b04d55db",
+			"revisionTime": "2018-07-09T14:39:12Z"
 		},
 		{
 			"checksumSHA1": "ziMb9+ANGRJSSIuxYdRbA+cDRBQ=",
 			"origin": "github.com/conejoninja/tesoro/vendor/golang.org/x/text/transform",
 			"path": "golang.org/x/text/transform",
-			"revision": "c93195ea72c020750735218949e2e3e028893d3c",
-			"revisionTime": "2018-07-03T07:07:14Z"
+			"revision": "0605a8320aceb4207a5fb3521281e17ec2075476",
+			"revisionTime": "2018-07-08T16:53:44Z"
 		},
 		{
 			"checksumSHA1": "BCNYmf4Ek93G4lk5x3ucNi/lTwA=",
 			"origin": "github.com/conejoninja/tesoro/vendor/golang.org/x/text/unicode/norm",
 			"path": "golang.org/x/text/unicode/norm",
-			"revision": "c93195ea72c020750735218949e2e3e028893d3c",
-			"revisionTime": "2018-07-03T07:07:14Z"
+			"revision": "0605a8320aceb4207a5fb3521281e17ec2075476",
+			"revisionTime": "2018-07-08T16:53:44Z"
 		}
 	],
 	"rootPath": "github.com/xaionaro-go/cryptoWallet"

@@ -8,13 +8,14 @@
 
 // +build linux,cgo darwin,!ios,cgo windows,cgo
 
-package usbhid
+package lowlevel
 
 /*
-extern void goUsbHidLog(const char *s);
+extern void goLog(const char *s);
 
 #define ENABLE_LOGGING 1
 #define ENABLE_DEBUG_LOGGING 1
+#define ENUM_DEBUG
 
 #cgo CFLAGS: -I./c/hidapi -I./c/libusb
 
@@ -40,9 +41,12 @@ extern void goUsbHidLog(const char *s);
 	#include "os/poll_posix.c"
 	#include "os/darwin_usb.c"
 #elif OS_WINDOWS
+	#define HARDCODED_HIDAPI_DEVICE_FILTER "vid_534c"
+	#define HARDCODED_LIBUSB_DEVICE_FILTER "VID_1209"
+
 	#include <oledlg.h>
 
-  #include "os/poll_windows.c"
+	#include "os/poll_windows.c"
 	#include "os/threads_windows.c"
 #endif
 
