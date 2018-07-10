@@ -3,7 +3,7 @@ package internal
 import (
 	"fmt"
 
-	"github.com/zserge/hid"
+	"github.com/conejoninja/hid"
 )
 
 // WalletBase is a structure to be included by implementation of real wallets.

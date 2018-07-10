@@ -5,7 +5,7 @@ import (
 
 	I "github.com/xaionaro-go/cryptoWallet/internal/interfaces"
 	trezorOne "github.com/xaionaro-go/cryptoWallet/internal/wallets/satoshilabs/trezor/models/1"
-	"github.com/zserge/hid"
+	"github.com/conejoninja/hid"
 )
 
 // USBHIDDevice is a factory struct for USB HID crypto wallet device

@@ -6,45 +6,45 @@
 			"checksumSHA1": "HQ+j4FxuCD2AnEpsBmykY8ybVaQ=",
 			"origin": "github.com/conejoninja/tesoro/vendor/github.com/conejoninja/hid",
 			"path": "github.com/conejoninja/hid",
-			"revision": "47433921abad10eaa97c7436f805e014f725d851",
-			"revisionTime": "2018-07-09T14:02:28Z"
+			"revision": "84cdf03cffd87edfa3b9a07a128d2df33368040e",
+			"revisionTime": "2018-07-10T06:22:55Z"
 		},
 		{
-			"checksumSHA1": "9hZgZ7zYwkSonlJbqdFkrsFxqe0=",
+			"checksumSHA1": "T6dUwB6S5bA/MWlGoR8H11pBGyY=",
 			"path": "github.com/conejoninja/tesoro",
-			"revision": "47433921abad10eaa97c7436f805e014f725d851",
-			"revisionTime": "2018-07-09T14:02:28Z"
+			"revision": "84cdf03cffd87edfa3b9a07a128d2df33368040e",
+			"revisionTime": "2018-07-10T06:22:55Z"
 		},
 		{
-			"checksumSHA1": "Bbh4laFnYp8838OkoNfpw/ndzJk=",
+			"checksumSHA1": "VuWGxkDV/vPE/ClOnOFAdoyVhN8=",
 			"path": "github.com/conejoninja/tesoro/pb/google/protobuf",
-			"revision": "47433921abad10eaa97c7436f805e014f725d851",
-			"revisionTime": "2018-07-09T14:02:28Z"
+			"revision": "84cdf03cffd87edfa3b9a07a128d2df33368040e",
+			"revisionTime": "2018-07-10T06:22:55Z"
 		},
 		{
 			"checksumSHA1": "tsSq+lgDS5GbVwch4+qNGlnBN64=",
 			"path": "github.com/conejoninja/tesoro/pb/messages",
-			"revision": "47433921abad10eaa97c7436f805e014f725d851",
-			"revisionTime": "2018-07-09T14:02:28Z"
+			"revision": "84cdf03cffd87edfa3b9a07a128d2df33368040e",
+			"revisionTime": "2018-07-10T06:22:55Z"
 		},
 		{
 			"checksumSHA1": "ZHR7cE09eTMP64dinahEdq1IA9Q=",
 			"path": "github.com/conejoninja/tesoro/pb/types",
-			"revision": "47433921abad10eaa97c7436f805e014f725d851",
-			"revisionTime": "2018-07-09T14:02:28Z"
+			"revision": "84cdf03cffd87edfa3b9a07a128d2df33368040e",
+			"revisionTime": "2018-07-10T06:22:55Z"
 		},
 		{
-			"checksumSHA1": "dNZKg59+kiwiTAwRTe+Q0xz9Pis=",
+			"checksumSHA1": "1FEXWUHoKdcxi5wKvZr928G3VjQ=",
 			"path": "github.com/conejoninja/tesoro/transport",
-			"revision": "47433921abad10eaa97c7436f805e014f725d851",
-			"revisionTime": "2018-07-09T14:02:28Z"
+			"revision": "84cdf03cffd87edfa3b9a07a128d2df33368040e",
+			"revisionTime": "2018-07-10T06:22:55Z"
 		},
 		{
 			"checksumSHA1": "Pyou8mceOASSFxc7GeXZuVdSMi0=",
 			"origin": "github.com/conejoninja/tesoro/vendor/github.com/golang/protobuf/proto",
 			"path": "github.com/golang/protobuf/proto",
-			"revision": "47433921abad10eaa97c7436f805e014f725d851",
-			"revisionTime": "2018-07-09T14:02:28Z"
+			"revision": "84cdf03cffd87edfa3b9a07a128d2df33368040e",
+			"revisionTime": "2018-07-10T06:22:55Z"
 		},
 		{
 			"checksumSHA1": "0d+/QLR7AseSlNxMA7//21h3axo=",

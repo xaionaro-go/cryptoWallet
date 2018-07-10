@@ -11,13 +11,13 @@ import (
 	"fmt"
 	"log"
 
+	"github.com/conejoninja/hid"
 	"github.com/conejoninja/tesoro"
 	"github.com/conejoninja/tesoro/pb/messages"
 	"github.com/conejoninja/tesoro/transport"
 	"github.com/xaionaro-go/cryptoWallet/internal/errors"
 	routines "github.com/xaionaro-go/cryptoWallet/internal/routines"
 	"github.com/xaionaro-go/cryptoWallet/internal/wallets/satoshilabs"
-	"github.com/zserge/hid"
 )
 
 // TrezorBase is an implementation of common properties and methods of

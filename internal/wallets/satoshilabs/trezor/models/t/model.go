@@ -1,9 +1,9 @@
 package trezorT
 
 import (
+	"github.com/conejoninja/hid"
 	I "github.com/xaionaro-go/cryptoWallet/internal/interfaces"
 	trezorBase "github.com/xaionaro-go/cryptoWallet/internal/wallets/satoshilabs/trezor"
-	"github.com/zserge/hid"
 )
 
 type trezorT struct {

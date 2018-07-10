@@ -4,7 +4,7 @@ package cryptoWallet
 
 import (
 	"github.com/xaionaro-go/cryptoWallet/vendors"
-	"github.com/zserge/hid"
+	"github.com/conejoninja/hid"
 )
 
 // Find returns all known wallets that fits to the `filter`.

@@ -1,7 +1,7 @@
 package cryptoWalletInterfaces
 
 import (
-	"github.com/zserge/hid"
+	"github.com/conejoninja/hid"
 )
 
 // Wallet is an abstract interface over all supported Wallets

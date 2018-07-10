@@ -5,10 +5,10 @@ package trezorBase
 import (
 	"log"
 
+	"github.com/conejoninja/hid"
 	"github.com/conejoninja/tesoro/pb/messages"
 	"github.com/xaionaro-go/cryptoWallet/internal/errors"
 	"github.com/xaionaro-go/cryptoWallet/internal/wallets/satoshilabs"
-	"github.com/zserge/hid"
 )
 
 // TrezorBase -- see trezor.go

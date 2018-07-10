@@ -6,9 +6,9 @@ import (
 	"fmt"
 	"log"
 
+	"github.com/conejoninja/hid"
 	"github.com/xaionaro-go/cryptoWallet/internal/errors"
 	I "github.com/xaionaro-go/cryptoWallet/internal/interfaces"
-	"github.com/zserge/hid"
 )
 
 // USBHIDReconnect tries to reconnect to find and reconnect to the
