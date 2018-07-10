@@ -1,6 +1,8 @@
 package internal
 
 import (
+	"fmt"
+
 	"github.com/zserge/hid"
 )
 
@@ -21,6 +23,9 @@ func (base *WalletBase) SetGetPinFunc(getPinFunc func(title, description, ok, ca
 
 // GetPin calls a function to get a PIN or a passphrase.
 func (base *WalletBase) GetPin(title, description, ok, cancel string) ([]byte, error) {
+	if base.getPin == nil {
+		return []byte{}, fmt.Errorf("GetPin function is not defined. Please use SetGetPinFunc() first. See https://github.com/xaionaro-go/cryptoWallet/blob/master/interfaces.go#L6")
+	}
 	return base.getPin(title, description, ok, cancel)
 }
 
@@ -33,6 +38,9 @@ func (base *WalletBase) SetGetConfirmFunc(getConfirmFunc func(title, description
 
 // GetConfirm calls a function to get a confirmation
 func (base *WalletBase) GetConfirm(title, description, ok, cancel string) (bool, error) {
+	if base.getConfirm == nil {
+		return false, fmt.Errorf("GetConfirm function is not defined. Please use SetGetConfirmFunc() first. See https://github.com/xaionaro-go/cryptoWallet/blob/master/interfaces.go#L9")
+	}
 	return base.getConfirm(title, description, ok, cancel)
 }
 
