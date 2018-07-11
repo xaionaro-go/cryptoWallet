@@ -4,6 +4,7 @@ import (
 	"github.com/conejoninja/tesoro/pb/messages"
 )
 
+// Trezor is an interface that publishes methods of devices "Trezor One" and "Trezor T"
 type Trezor interface {
 	USBHIDWallet
 
