@@ -2,7 +2,7 @@ package trezorOne
 
 import (
 	"github.com/conejoninja/hid"
-	I "github.com/xaionaro-go/cryptoWallet/internal/interfaces"
+	I "github.com/xaionaro-go/cryptoWallet/interfaces"
 	trezorBase "github.com/xaionaro-go/cryptoWallet/internal/wallets/satoshilabs/trezor"
 )
 

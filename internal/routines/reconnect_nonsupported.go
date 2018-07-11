@@ -4,7 +4,7 @@ package cryptoWalletRoutines
 
 import (
 	"fmt"
-	I "github.com/xaionaro-go/cryptoWallet/internal/interfaces"
+	I "github.com/xaionaro-go/cryptoWallet/interfaces"
 	"log"
 )
 

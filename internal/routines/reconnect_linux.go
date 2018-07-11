@@ -7,8 +7,8 @@ import (
 	"log"
 
 	"github.com/conejoninja/hid"
+	I "github.com/xaionaro-go/cryptoWallet/interfaces"
 	"github.com/xaionaro-go/cryptoWallet/internal/errors"
-	I "github.com/xaionaro-go/cryptoWallet/internal/interfaces"
 )
 
 // USBHIDReconnect tries to reconnect to find and reconnect to the

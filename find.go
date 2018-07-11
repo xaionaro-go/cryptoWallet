@@ -1,5 +1,9 @@
 package cryptoWallet
 
+import (
+	I "github.com/xaionaro-go/cryptoWallet/interfaces"
+)
+
 // Filter is a struct that could be passed to Find() to select devices
 type Filter struct {
 	IsUSBHID   *bool
@@ -8,7 +12,7 @@ type Filter struct {
 }
 
 // FindAny returns any found known wallet
-func FindAny() Wallet {
+func FindAny() I.Wallet {
 	result := Find(Filter{})
 	if len(result) == 0 {
 		return nil

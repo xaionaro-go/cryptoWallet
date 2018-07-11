@@ -1,9 +1,5 @@
 package cryptoWalletInterfaces
 
-import (
-	"github.com/conejoninja/hid"
-)
-
 // Wallet is an abstract interface over all supported Wallets
 type Wallet interface {
 	// Sets a function to be called when it's required to enter a PIN or a passphrase
@@ -22,35 +18,49 @@ type Wallet interface {
 	// function before other functions to be sure that the device is in an
 	// expected state.
 	//
-	// See also: https://doc.satoshilabs.com/trezor-tech/api-workflows.html#initialize-features
+	// [trezor] See also: https://doc.satoshilabs.com/trezor-tech/api-workflows.html#initialize-features
 	Reset() error
 
 	// Checks the connection to the device and reconnects if required
 	CheckConnection() error
 
-	// Reconnect to the device
+	// Reconnect tries to reconnect to find and reconnect to the device
+	//
+	// If the wallet is not found it calls GetConfirm method to get a confirmation
+	// that it's required to try one more time.
 	Reconnect() error
 
 	// Checks if the device answers correctly to a ping
 	Ping() error
 
-	// Encrypt a key. It should be a multiple of 16 bytes.
+	// EncryptKey encrypts a key using a symmetric algorithm. The key length
+	// should be a multiple of 16 bytes.
+	//
+	// - `path` is a BIP32 path;
+	//
+	// - `decryptedKey` is a key to be encrypted;
+	//
+	// - `nonce` is optional "number that can only be used once",
+	//    see https://en.wikipedia.org/wiki/Cryptographic_nonce;
+	//
+	// - `trezorKeyname` is a key name that affects on encrypts and displays
+	//    on the screen of a trezor device.
 	EncryptKey(bip32Path string, decryptedKey []byte, nonce []byte, keyName string) ([]byte, error)
 
-	// Decrypt a key. It should be a multiple of 16 bytes.
+	// DecryptKey decrypts a key using a symmetric algorithm. The key length
+	// should be a multiple of 16 bytes.
+	//
+	// - `path` is a BIP32 path;
+	//
+	// - `encryptedKey` is a key to be decrypted;
+	//
+	// - `nonce` is "number that can only be used once",
+	//    see https://en.wikipedia.org/wiki/Cryptographic_nonce;
+	//
+	// - `trezorKeyname` is a key name that affects on encrypts and displays
+	//    on the screen of a trezor device.
 	DecryptKey(bip32Path string, encryptedKey []byte, nonce []byte, keyName string) ([]byte, error)
 
 	// Returns a name of the device
 	Name() string
-}
-
-// USBHIDWallet is an abstract interface over USB HID Wallets
-type USBHIDWallet interface {
-	Wallet
-
-	SetHIDDevice(device hid.Device)
-
-	GetProductID() uint16
-	GetVendorID() uint16
-	GetInterfaceID() uint8
 }

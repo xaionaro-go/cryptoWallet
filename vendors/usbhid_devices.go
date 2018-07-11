@@ -3,7 +3,7 @@ package vendors
 import (
 	"strings"
 
-	I "github.com/xaionaro-go/cryptoWallet/internal/interfaces"
+	I "github.com/xaionaro-go/cryptoWallet/interfaces"
 	trezorOne "github.com/xaionaro-go/cryptoWallet/internal/wallets/satoshilabs/trezor/models/1"
 	"github.com/conejoninja/hid"
 )

@@ -116,7 +116,7 @@ func ExampleFind() {
 	}
 
 	// Using the first found device
-	trezor := trezors[0]
+	trezor := trezors[0] // also you can cast it into `cryptoWalletInterfaces.Trezor`
 
 	// Put the device to the initial state. This also checks if the device
 	// is initialized

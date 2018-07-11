@@ -3,8 +3,9 @@
 package cryptoWallet
 
 import (
-	"github.com/xaionaro-go/cryptoWallet/vendors"
 	"github.com/conejoninja/hid"
+	I "github.com/xaionaro-go/cryptoWallet/interfaces"
+	"github.com/xaionaro-go/cryptoWallet/vendors"
 )
 
 // Find returns all known wallets that fits to the `filter`.
@@ -21,7 +22,7 @@ import (
 // - If the `filter` is empty then it will search for any wallets
 //
 // At the moment the only supported platform is Linux
-func Find(filter Filter) (result []Wallet) {
+func Find(filter Filter) (result []I.Wallet) {
 	if filter.IsUSBHID != nil {
 		if *filter.IsUSBHID != true {
 			return
