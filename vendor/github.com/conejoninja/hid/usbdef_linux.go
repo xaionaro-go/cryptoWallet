@@ -63,7 +63,7 @@ const (
 	USBDEVFS_RELEASE    = 0x80045510
 )
 
-const DevBusUsb = "/dev/bus/usb"//"/sys/bus/usb/devices"
+const DevBusUsb = "/dev/bus/usb" //"/sys/bus/usb/devices"
 
 const (
 	UsbDescTypeDevice    = 1

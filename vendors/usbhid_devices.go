@@ -3,9 +3,9 @@ package vendors
 import (
 	"strings"
 
+	"github.com/conejoninja/hid"
 	I "github.com/xaionaro-go/cryptoWallet/interfaces"
 	trezorOne "github.com/xaionaro-go/cryptoWallet/internal/wallets/satoshilabs/trezor/models/1"
-	"github.com/conejoninja/hid"
 )
 
 // USBHIDDevice is a factory struct for USB HID crypto wallet device
