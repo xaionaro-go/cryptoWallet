@@ -6,7 +6,7 @@ import (
 
 // Trezor is an interface that publishes methods of devices "Trezor One" and "Trezor T"
 type Trezor interface {
-	USBHIDWallet
+	USBWallet
 
 	// CipherKeyValue is a function of symmetric encryption of key-value paris
 	// using deterministic hierarchy

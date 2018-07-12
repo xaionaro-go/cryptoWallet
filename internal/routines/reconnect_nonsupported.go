@@ -12,3 +12,8 @@ func USBHIDReconnect(parent I.USBHIDWallet) error {
 	log.Panic("cryptowallets are not supported on this platform :(")
 	return fmt.Errorf("not supported")
 }
+
+func WebUSBReconnect(parent I.WebUSBWallet) error {
+	log.Panic("cryptowallets are not supported on this platform :(")
+	return fmt.Errorf("not supported")
+}

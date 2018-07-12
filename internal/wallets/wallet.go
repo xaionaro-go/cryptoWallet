@@ -2,8 +2,6 @@ package internal
 
 import (
 	"fmt"
-
-	"github.com/conejoninja/hid"
 )
 
 // WalletBase is a structure to be included by implementation of real wallets.
@@ -54,40 +52,31 @@ func (base *WalletBase) SetName(newName string) {
 	base.name = newName
 }
 
-// USBHIDWalletBase is a structure to extend WalletBase for USB HID devices
-type USBHIDWalletBase struct {
+type USBWalletBase struct {
 	WalletBase
-	device      hid.Device
+
 	vendorID    uint16
 	productID   uint16
-	interfaceID uint8
+	interfaceID uint8 // is not used on webusb
 }
 
-// SetHIDDevice sets an USB HID device to be used
-func (base *USBHIDWalletBase) SetHIDDevice(device hid.Device) {
-	base.device = device
-	info := device.Info()
-	base.vendorID = info.Vendor
-	base.productID = info.Product
-	base.interfaceID = info.Interface
+func (base *USBWalletBase) SetUSBInfo(vendorID, productID uint16, interfaceID uint8) {
+	base.vendorID = vendorID
+	base.productID = productID
+	base.interfaceID = interfaceID
 }
 
 // GetVendorID returns USB device vendor ID
-func (base USBHIDWalletBase) GetVendorID() uint16 {
+func (base USBWalletBase) GetVendorID() uint16 {
 	return base.vendorID
 }
 
 // GetProductID returns USB device product ID
-func (base USBHIDWalletBase) GetProductID() uint16 {
+func (base USBWalletBase) GetProductID() uint16 {
 	return base.productID
 }
 
 // GetInterfaceID returns USB device interface ID
-func (base USBHIDWalletBase) GetInterfaceID() uint8 {
+func (base USBWalletBase) GetInterfaceID() uint8 {
 	return base.interfaceID
-}
-
-// GetHIDDevice returns previously set USB HID device
-func (base USBHIDWalletBase) GetHIDDevice() hid.Device {
-	return base.device
 }

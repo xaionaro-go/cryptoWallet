@@ -7,5 +7,5 @@ import (
 // Base is a structure to be included by implementation of wallets submitted
 // by a vendor "SatoshiLabs".
 type Base struct {
-	base.USBHIDWalletBase
+	base.USBWalletBase
 }

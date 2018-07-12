@@ -1,8 +1,3 @@
-// +build linux,cgo darwin,!ios,cgo windows,cgo
-
-// The building requirements above a copied from
-// github.com/trezor/usbhid/libusb.go (commit: 519ec1000beb862bbe9b16b99d782ab77787ea18)
-
 package trezorBase
 
 import (
@@ -11,28 +6,27 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/conejoninja/hid"
 	"github.com/conejoninja/tesoro"
 	"github.com/conejoninja/tesoro/pb/messages"
-	"github.com/conejoninja/tesoro/transport"
+	I "github.com/xaionaro-go/cryptoWallet/interfaces"
 	"github.com/xaionaro-go/cryptoWallet/internal/errors"
-	routines "github.com/xaionaro-go/cryptoWallet/internal/routines"
 	"github.com/xaionaro-go/cryptoWallet/internal/wallets/satoshilabs"
 )
 
 // TrezorBase is an implementation of common properties and methods of
 // all trezor devices
 type TrezorBase struct {
+	wallet I.Wallet // The parent
 	satoshilabsWallet.Base
 	Client tesoro.Client
 }
 
-// SetHIDDevice sets USB HID device to be used to reach the crypto wallet
-func (trezor *TrezorBase) SetHIDDevice(device hid.Device) {
-	var t transport.TransportHID
-	t.SetDevice(device)
-	trezor.Client.SetTransport(&t)
-	trezor.USBHIDWalletBase.SetHIDDevice(device)
+// SetName sets a new name of the device
+func (trezor *TrezorBase) SetWallet(wallet I.Wallet) {
+	if trezor.wallet != nil {
+		panic("trezor.wallet is already not nil")
+	}
+	trezor.wallet = wallet
 }
 
 func (trezor *TrezorBase) call(msg []byte) (string, uint16) {
@@ -71,7 +65,7 @@ func (trezor *TrezorBase) call(msg []byte) (string, uint16) {
 	return result, msgType
 }
 
-func (trezor *TrezorBase) ping(pingMsg string) (string, messages.MessageType) {
+func (trezor *TrezorBase) Ping(pingMsg string) (string, messages.MessageType) {
 	pongMsg, msgType := trezor.Client.Call(trezor.Client.Ping(pingMsg, false, false, false))
 	return pongMsg, messages.MessageType(msgType)
 }
@@ -114,41 +108,13 @@ func (trezor *TrezorBase) Reset() error {
 	return nil
 }
 
-// Ping checks if the device answers correctly to a ping
-func (trezor *TrezorBase) Ping() error {
-	if trezor.USBHIDWalletBase.GetHIDDevice() == nil {
-		return fmt.Errorf("trezor.USBHIDWalletBase.GetDevice() == nil")
-	}
-	if _, err := trezor.USBHIDWalletBase.GetHIDDevice().HIDReport(); err != nil {
-		return err
-	}
-	pongMsg, msgType := trezor.ping("ping")
-	if pongMsg == "ping" {
-		return nil
-	}
-	switch msgType {
-	case messages.MessageType_MessageType_Success:
-		return fmt.Errorf("The wallet device seems to be not initialized")
-	}
-	return fmt.Errorf("An unexpected behaviour of the wallet device: %v: %v", msgType, pongMsg)
-}
-
-// Reconnect tries to reconnect to find and reconnect to the  USB HID device
-// of the wallet.
-//
-// If the wallet is not found it calls GetConfirm method to get a confirmation
-// that it's required to try one more time.
-func (trezor *TrezorBase) Reconnect() error {
-	return routines.USBHIDReconnect(trezor)
-}
-
 // CheckConnection checks the connection to the device and reconnects if required
 func (trezor *TrezorBase) CheckConnection() error {
-	if trezor.Ping() == nil {
+	if trezor.wallet.Ping() == nil {
 		return nil
 	}
 
-	return trezor.Reconnect()
+	return trezor.wallet.Reconnect()
 }
 
 // CipherKeyValue is a function of symmetric encryption of key-value paris
