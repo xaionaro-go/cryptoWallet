@@ -3,7 +3,6 @@ package transport
 import (
 	"encoding/binary"
 	"errors"
-	"fmt"
 	"log"
 	"math"
 	"sync"
@@ -41,11 +40,11 @@ func (t *TransportWebUSB) SetDevice(device lowlevel.Device) {
 		// return nil, err
 	}
 
-	currConf, err := lowlevel.Get_Configuration(d)
+	_, err = lowlevel.Get_Configuration(d)
 	if err != nil {
 		log.Fatalf("webusb - connect - current configuration err %s", err.Error())
 	} else {
-		fmt.Printf("webusb - connect - current configuration %d\n", currConf)
+		//log.Printf("webusb - connect - current configuration %d\n", currConf)
 	}
 
 	err = lowlevel.Set_Configuration(d, webConfigNum)
@@ -53,14 +52,14 @@ func (t *TransportWebUSB) SetDevice(device lowlevel.Device) {
 		// don't abort if set configuration fails
 		// lowlevel.Close(d)
 		// return nil, err
-		fmt.Printf("Warning: error at configuration set: %s\n", err)
+		//log.Printf("Warning: error at configuration set: %s\n", err)
 	}
 
-	currConf, err = lowlevel.Get_Configuration(d)
+	_, err = lowlevel.Get_Configuration(d)
 	if err != nil {
-		fmt.Printf("webusb - connect - current configuration err %s\n", err.Error())
+		log.Printf("webusb - connect - current configuration err %s\n", err.Error())
 	} else {
-		fmt.Printf("webusb - connect - current configuration %d\n", currConf)
+		//log.Printf("webusb - connect - current configuration %d\n", currConf)
 	}
 
 	err = lowlevel.Claim_Interface(d, webIfaceNum)
