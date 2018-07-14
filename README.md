@@ -7,6 +7,7 @@ Supported devices:
 | Vendor | Product | Product (lsusb) | Vendor ID | Product ID | Version | Notes |
 | ------ | ------- | --------------- | --------- | ---------- | ------- | ----- |
 | SatoshiLabs | Trezor One | Bitcoin Wallet [TREZOR] | 0x534c | 0x0001 | 1.6.0 |Tested on Linux |
+| InterBiometrics | Trezor T | TREZOR | 0x1209 | 0x53c1 | | Tested on Linux |
 
 ```go
 [...]
