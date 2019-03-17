@@ -20,9 +20,15 @@ type trezorT struct {
 //
 // device - is a WebUSB device to reach the "Trezor T"
 // name - is the name from vendors/
-func New(device interface{}, name string) I.Wallet {
+//
+// if "device" is of incorrect type then returns nil
+func New(deviceI interface{}, name string) I.Wallet {
+	device, ok := deviceI.(lowlevel.Device)
+	if !ok {
+		return nil
+	}
 	instance := &trezorT{}
-	instance.SetWebUSBDevice(device.(lowlevel.Device))
+	instance.SetWebUSBDevice(device)
 	instance.SetName(name)
 	return instance
 }

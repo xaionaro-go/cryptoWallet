@@ -1,11 +1,8 @@
 package vendors
 
 import (
-	"fmt"
 	"strings"
 
-	"github.com/conejoninja/hid"
-	trezorWebUSB "github.com/trezor/trezord-go/usb/lowlevel"
 	I "github.com/xaionaro-go/cryptoWallet/interfaces"
 	trezorOne "github.com/xaionaro-go/cryptoWallet/internal/wallets/satoshilabs/trezor/models/1"
 	trezorT "github.com/xaionaro-go/cryptoWallet/internal/wallets/satoshilabs/trezor/models/t"
@@ -54,9 +51,6 @@ func (usbDevices USBDevices) GetUSBWallet(lowerDevice interface{}, vendorID, pro
 		return nil
 	}
 	usbDevice := usbDevices[vendorID][productID][interfaceID]
-	if fmt.Sprintf("%T", usbDevice.lowerDeviceSample) != fmt.Sprintf("%T", lowerDevice) {
-		return nil
-	}
 	return usbDevice.New(lowerDevice).(I.USBWallet)
 }
 
@@ -75,22 +69,20 @@ func (usbDevices USBDevices) GetUSBWallet(lowerDevice interface{}, vendorID, pro
 //
 // Warning: Do not rely on type USBDevices, it can change in future!
 func GetUSBDevices() USBDevices {
-	var hidDeviceSample hid.Device
-	var trezorWebUSBSample trezorWebUSB.Device
 	return USBDevices{
 		// SatoshiLabs
 		0x534c: map[uint16]map[uint8]*USBDevice{
 			// Trezor One
 			0x0001: {
 				// See https://github.com/trezor/trezor-mcu/blob/826b764085c0e637eed5bf631bacea964327289d/firmware/usb.c#L32
-				0x00: {deviceBase: deviceBase{name: "Trezor One"}, factory: trezorOne.New, lowerDeviceSample: hidDeviceSample}, // the main interface (USB HID)
+				0x00: {deviceBase: deviceBase{name: "Trezor One"}, factory: trezorOne.New}, // the main interface (USB HID)
 				//0x01: , // U2F interface
 			},
 		},
 		0x1209: map[uint16]map[uint8]*USBDevice{
 			// Trezor T
 			0x53C1: {
-				0x00: {deviceBase: deviceBase{name: "Trezor T"}, factory: trezorT.New, lowerDeviceSample: trezorWebUSBSample}, // the main interface (WebUSB)
+				0x00: {deviceBase: deviceBase{name: "Trezor T"}, factory: trezorT.New}, // the main interface (WebUSB)
 				//0x01: , // USB HID (special purposes)
 			},
 		},

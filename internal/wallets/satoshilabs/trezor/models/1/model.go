@@ -25,9 +25,15 @@ type trezorOne struct {
 //
 // device - is a USB HID device to reach the "Trezor One"
 // name - is the name from vendors/
+//
+// if "device" is of incorrect type then returns nil
 func New(device interface{}, name string) I.Wallet {
+	hid, ok := device.(hid.Device)
+	if !ok {
+		return nil
+	}
 	instance := &trezorOne{}
-	instance.SetUSBHIDDevice(device.(hid.Device))
+	instance.SetUSBHIDDevice(hid)
 	instance.SetName(name)
 	instance.SetWallet(instance)
 	return instance
