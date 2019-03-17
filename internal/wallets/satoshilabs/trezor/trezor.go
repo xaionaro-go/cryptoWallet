@@ -19,6 +19,8 @@ type TrezorBase struct {
 	wallet I.Wallet // The parent
 	satoshilabsWallet.Base
 	Client tesoro.Client
+
+	defaultAskOnEncode bool
 }
 
 // SetName sets a new name of the device
@@ -27,6 +29,12 @@ func (trezor *TrezorBase) SetWallet(wallet I.Wallet) {
 		panic("trezor.wallet is already not nil")
 	}
 	trezor.wallet = wallet
+}
+
+// SetDefaultAskOnEncode is a method to set the value which will be passed
+// as argument "askOnEncode" to "CipherKeyValue" from method "EncryptKey"
+func (trezor *TrezorBase) SetDefaultAskOnEncode(newDefaultAskOnEncode bool) {
+	trezor.defaultAskOnEncode = newDefaultAskOnEncode
 }
 
 func (trezor *TrezorBase) call(msg []byte) (string, uint16) {
@@ -143,7 +151,7 @@ func (trezor *TrezorBase) EncryptKey(path string, decryptedKey []byte, nonce []b
 
 	trezor.CheckConnection()
 
-	encryptedKey, msgTypeInt := trezor.CipherKeyValue(path, true, trezorKeyname, decryptedKey, nonce, false, true)
+	encryptedKey, msgTypeInt := trezor.CipherKeyValue(path, true, trezorKeyname, decryptedKey, nonce, trezor.defaultAskOnEncode, true)
 
 	msgType := messages.MessageType(msgTypeInt)
 	switch msgType {
@@ -183,7 +191,7 @@ func (trezor *TrezorBase) DecryptKey(path string, encryptedKey []byte, nonce []b
 		encryptedKeyhexValue += "00"
 	}
 
-	decryptedKey, msgType := trezor.CipherKeyValue(path, false, trezorKeyname, []byte(encryptedKeyhexValue), nonce, false, true)
+	decryptedKey, msgType := trezor.CipherKeyValue(path, false, trezorKeyname, []byte(encryptedKeyhexValue), nonce, trezor.defaultAskOnEncode, true)
 
 	switch msgType {
 	case messages.MessageType_MessageType_Success, messages.MessageType_MessageType_CipheredKeyValue:
